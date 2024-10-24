@@ -21,11 +21,12 @@ const style = StyleSheet.create({
         
     },
     botao: {
-        
+        backgroundColor: 'white',
+        padding: 10
     }
 })
 
-export default Cadastro = () => {
+export default Login = () => {
     const [credenciais, setCredenciais] = useState({
         email: "",
         senha: ""

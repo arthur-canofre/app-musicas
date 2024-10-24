@@ -1,9 +1,12 @@
 import Express from "express";
 import { criarTabelas, User } from "./db.js";
 import bcryptjs from "bcryptjs"
+import jasonwebtoken from 'jsonwebtoken'
+import cors from 'cors'
 
 const app = Express()
 app.use(Express.json())
+app.use(cors())
 //criarTabelas()
 
 app.post('/registro', async (req, res) => {
@@ -32,16 +35,28 @@ app.post('/login', async (req, res) => {
 
     const userExist = await User.findOne({ where: {email:email}})
     if(!userExist){
-        res.send('usuario nao existe')
+        res.send('Ta errado')
         return
     }
     const senhaValida = bcryptjs.compareSync(senha, userExist.senha)
     if(!senhaValida){
-        res.send("Senha invalida!")
+        res.send("Ta errado")
         return
     }
-
-    res.send("Logado com sucesso!")
+    
+    const token = jasonwebtoken.sign(
+        {
+            "nome completo": `${userExist.nome} ${userExist.sobrenome}`,
+            "email": userExist.email,
+            "status": userExist.status
+        },
+        'chavecriptografiajwt',
+        {expiresIn: 1000*60*5}
+    )
+    res.send({
+        msg: "Logado com sucesso!",
+        tokenJWT: token 
+    })
 })
 
 app.listen(8000)

@@ -12,7 +12,7 @@ export default Cadastro = () => {
         sobrenome: "",
         email: "",
         senha: "",
-        dataNasc: ""
+        dataNascimento: ""
     })
 
     const [isValid, setIsValid] = useState(null)
@@ -20,7 +20,31 @@ export default Cadastro = () => {
     const onChangeText = (value, campo) =>{
         const newCredenciais = {...credenciais, [campo]: value}
         setCredenciais(newCredenciais)
-        console.log(credenciais)
+    }
+
+    const cadastrar = async() => {
+        if (!credenciais.email || !credenciais.senha || !credenciais.nome || !credenciais.sobrenome || !credenciais.dataNascimento){
+            setIsValid(false)
+            return
+        }
+        try{
+            const response = await fetch('http://localhost:8000/registro', {
+                method: 'POST',
+                headers: {
+                    Accept: 'applicaton/json',
+                    'Content-Type': 'applicaton/json'
+                },
+                body: JSON.stringify(credenciais)
+            })
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            console.log(data)
+        }catch(err){
+            console.error(err)
+        }
     }
     return(
         <View>
@@ -46,13 +70,13 @@ export default Cadastro = () => {
                 />
                 <TextInput
                     placeholder="Data de Nascimento"
-                    value={credenciais.dataNasc}
-                    onChangeText={(value) => {onChangeText(value, "dataNasc")}}
+                    value={credenciais.dataNascimento}
+                    onChangeText={(value) => {onChangeText(value, "dataNascimento")}}
                 />
                 { isValid === false? <Text>Crenciais Invalidas</Text>: null}
                 <Button
                     title="Confirmar"
-                    onPress={() => {!credenciais.email || !credenciais.senha || !credenciais.nome || !credenciais.sobrenome || !credenciais.dataNasc? setIsValid(false): [setIsValid(true),alert("tudo certo amigao")]}}
+                    onPress={() => cadastrar()}
                 />
                 <Link href='/login'><Text>Ja tem conta?</Text></Link>
         </View>
