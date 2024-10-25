@@ -1,28 +1,69 @@
 import React,{useState} from "react";
-import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Pressable, StyleSheet, Image } from 'react-native'
 import { Link } from 'expo-router'
 
 const style = StyleSheet.create({
-    container:{
-        height: '100%',
-        width: '100%',
+    fundo: {
         backgroundColor: '#03045E',
+        height: '100%'
+    },
+    container:{
+        height: '90%',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 15,
+        backgroundColor: '#03045E'
     },
     inpContainer:{
-
+        gap: 20,
+        alignItems: 'center'
     },
     input:{
         backgroundColor: '#0096C7',
-        borderColor: '#00B4D8',
-        borderWidth: 1,
         borderRadius: 10,
         width: 250,
-        height: 45
-        
+        height: 45,
+        padding: 15,
+        textAlign: 'left'
     },
     botao: {
-        backgroundColor: 'white',
-        padding: 10
+        backgroundColor: '#0096C7',
+        borderRadius: 10,
+        width: 110,
+        height: 45,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    btText:{
+        fontSize: 24
+    },
+    img: {
+        width: 240,
+        height: 240
+    },
+    titulo:{
+        fontSize: 35,
+        color: '#227FCF',
+        fontWeight: 'bold'
+    },
+    containerTitulo:{
+        alignItems: 'center',
+        paddingBottom: 20
+    },
+    titulo2:{
+        fontSize: 30,
+        color: '#CAF0F8',
+        fontWeight: 'bold',
+        paddingBottom: 30
+    },
+    errText:{
+        color: 'red'
+    },
+    link:{
+        color: '#48CAE4',
+        textDecorationLine: 'underline'
     }
 })
 
@@ -39,28 +80,34 @@ export default Login = () => {
         setCredenciais(newCredenciais)
     }
     return(
-        <View style={style.container}>
-            <View style={style.inpContainer}>
-                <TextInput
-                    style={style.input}
-                    placeholder="Email"
-                    value={credenciais.email}
-                    onChangeText={(value) => {onChangeText(value, "email")}}
-                />
-                <TextInput
-                    style={style.input}
-                    placeholder="Senha"
-                    value={credenciais.senha}
-                    onChangeText={(value) => {onChangeText(value, "senha")}}
-                />
-                { isValid === false? <Text>Crenciais Invalidas</Text>: null}
+        <View style={style.fundo}>
+            <View style={style.container}>
+                <View style={style.containerTitulo}>
+                    <Image style={style.img} source={require('../../assets/images/logo-app.png')}/>
+                    <Text style={style.titulo}>A Sinfonia da Noite</Text>
+                </View>
+                <Text style={style.titulo2}>Login</Text>
+                <View style={style.inpContainer}>
+                    <TextInput
+                        style={style.input}
+                        placeholder="Email"
+                        value={credenciais.email}
+                        onChangeText={(value) => {onChangeText(value, "email")}}
+                    />
+                    <TextInput
+                        style={style.input}
+                        placeholder="Senha"
+                        value={credenciais.senha}
+                        onChangeText={(value) => {onChangeText(value, "senha")}}
+                    />
+                    { isValid === false? <Text style={style.errText}>Credenciais Invalidas</Text>: null}
+                </View>
+                    <Pressable
+                        style={style.botao}
+                        onPress={() => {!credenciais.email || !credenciais.senha? setIsValid(false): [setIsValid(true),alert("tudo certo amigao")]}}
+                    ><Text style={style.btText}>Entrar</Text></Pressable>
+                    <Link href='/cadastro'><Text style={style.link}>Não tenho conta</Text></Link>
             </View>
-                <Pressable
-                    style={style.botao}
-                    title="Confirmar"
-                    onPress={() => {!credenciais.email || !credenciais.senha? setIsValid(false): [setIsValid(true),alert("tudo certo amigao")]}}
-                ><Text>Entrar</Text></Pressable>
-                <Link href='/cadastro'><Text style={style.link}>Não tenho conta</Text></Link>
         </View>
     )
 }
