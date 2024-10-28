@@ -79,6 +79,31 @@ export default Login = () => {
         const newCredenciais = {...credenciais, [campo]: value}
         setCredenciais(newCredenciais)
     }
+
+    const logar = async() => {
+        //console.log(credenciais)
+        const dados = JSON.stringify(credenciais)
+        console.log(dados)
+        if (!credenciais.email || !credenciais.senha){
+            setIsValid(false)
+            return
+        }
+        try{
+            const response = await fetch('http://localhost:8000/login', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(credenciais)
+            })
+            const data = await response.json();
+            console.log(data)
+        }catch(err){
+            console.error(err)
+        }
+    }
+
     return(
         <View style={style.fundo}>
             <View style={style.container}>
@@ -104,7 +129,7 @@ export default Login = () => {
                 </View>
                     <Pressable
                         style={style.botao}
-                        onPress={() => {!credenciais.email || !credenciais.senha? setIsValid(false): [setIsValid(true),alert("tudo certo amigao")]}}
+                        onPress={logar}
                     ><Text style={style.btText}>Entrar</Text></Pressable>
                     <Link href='/cadastro'><Text style={style.link}>Não tenho conta</Text></Link>
             </View>

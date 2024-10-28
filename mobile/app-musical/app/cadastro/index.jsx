@@ -72,6 +72,9 @@ export default Cadastro = () => {
     }
 
     const cadastrar = async() => {
+        //console.log(credenciais)
+        const dados = JSON.stringify(credenciais)
+        console.log(dados)
         if (!credenciais.email || !credenciais.senha || !credenciais.nome || !credenciais.sobrenome || !credenciais.dataNascimento){
             setIsValid(false)
             return
@@ -80,15 +83,11 @@ export default Cadastro = () => {
             const response = await fetch('http://localhost:8000/registro', {
                 method: 'POST',
                 headers: {
-                    Accept: 'applicaton/json',
-                    'Content-Type': 'applicaton/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(credenciais)
             })
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
             const data = await response.json();
             console.log(data)
         }catch(err){
@@ -131,11 +130,11 @@ export default Cadastro = () => {
                         onChangeText={(value) => {onChangeText(value, "dataNascimento")}}
                     />
                     
-                    { isValid === false? <Text>Crenciais Invalidas</Text>: null}
+                    { isValid === false? <Text style={style.errText}>Crenciais Invalidas</Text>: null}
                 </View>
                 <Pressable
                         style={style.botao}
-                        onPress={() => {!credenciais.email || !credenciais.senha? setIsValid(false): [setIsValid(true),alert("tudo certo amigao")]}}
+                        onPress={cadastrar}
                     ><Text style={style.btText}>Confirmar</Text></Pressable>
                 <Link href='/login'><Text style={style.link}>Ja tem conta?</Text></Link>
             </View>

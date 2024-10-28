@@ -12,7 +12,7 @@ app.use(cors())
 app.post('/registro', async (req, res) => {
     const {nome, sobrenome, email, senha, dataNascimento} = req.body
     if(!nome || !sobrenome || !senha || !email || !dataNascimento){
-        res.send("PREENCHA OS CAMPOS")
+        res.send(sobrenome+ "recebaaa")
         return
     } 
     const userExist = await User.findOne({ where: {email:email}})
