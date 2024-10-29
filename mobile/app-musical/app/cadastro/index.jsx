@@ -80,7 +80,7 @@ export default Cadastro = () => {
             return
         }
         try{
-            const response = await fetch('http://localhost:8000/registro', {
+            const response = await fetch('http://localhost:8000/autenticacao/registro', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -136,7 +136,7 @@ export default Cadastro = () => {
                         style={style.botao}
                         onPress={cadastrar}
                     ><Text style={style.btText}>Confirmar</Text></Pressable>
-                <Link href='/login'><Text style={style.link}>Ja tem conta?</Text></Link>
+                <Link href='/'><Text style={style.link}>Ja tem conta?</Text></Link>
             </View>
         </View>
     )

@@ -89,7 +89,7 @@ export default Login = () => {
             return
         }
         try{
-            const response = await fetch('http://localhost:8000/login', {
+            const response = await fetch('http://localhost:8000/autenticacao/login', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -97,7 +97,7 @@ export default Login = () => {
                 },
                 body: JSON.stringify(credenciais)
             })
-            const data = await response.json();
+            const data = response;
             console.log(data)
         }catch(err){
             console.error(err)
@@ -108,7 +108,7 @@ export default Login = () => {
         <View style={style.fundo}>
             <View style={style.container}>
                 <View style={style.containerTitulo}>
-                    <Image style={style.img} source={require('../../assets/images/logo-app.png')}/>
+                    <Image style={style.img} source={require('../assets/images/logo-app.png')}/>
                     <Text style={style.titulo}>A Sinfonia da Noite</Text>
                 </View>
                 <Text style={style.titulo2}>Login</Text>
