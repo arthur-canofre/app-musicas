@@ -108,7 +108,7 @@ export default Login = () => {
         <View style={style.fundo}>
             <View style={style.container}>
                 <View style={style.containerTitulo}>
-                    <Image style={style.img} source={require('../assets/images/logo-app.png')}/>
+                    <Image style={style.img} source={require('../../assets/images/logo-app.png')}/>
                     <Text style={style.titulo}>A Sinfonia da Noite</Text>
                 </View>
                 <Text style={style.titulo2}>Login</Text>
