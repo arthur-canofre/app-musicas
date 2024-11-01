@@ -65,6 +65,7 @@ export default Cadastro = () => {
     })
 
     const [isValid, setIsValid] = useState(null)
+    const [errorText, setErrorText] = useState("")
 
     const onChangeText = (value, campo) =>{
         const newCredenciais = {...credenciais, [campo]: value}
@@ -72,11 +73,10 @@ export default Cadastro = () => {
     }
 
     const cadastrar = async() => {
-        //console.log(credenciais)
         const dados = JSON.stringify(credenciais)
-        console.log(dados)
         if (!credenciais.email || !credenciais.senha || !credenciais.nome || !credenciais.sobrenome || !credenciais.dataNascimento){
             setIsValid(false)
+            setErrorText("Preencha todos os campos")
             return
         }
         try{
@@ -88,8 +88,17 @@ export default Cadastro = () => {
                 },
                 body: JSON.stringify(credenciais)
             })
-            const data = await response.json();
-            console.log(data)
+
+            const data = response.status;
+
+            if(!response.ok){
+                switch (data) {
+                    case 409: [setIsValid(false), setErrorText("Este email ja esta sendo utilizado")]
+                    break
+                }
+            }else{
+                alert("Cadastro realizado com sucesso!")
+            }
         }catch(err){
             console.error(err)
         }
@@ -130,13 +139,13 @@ export default Cadastro = () => {
                         onChangeText={(value) => {onChangeText(value, "dataNascimento")}}
                     />
                     
-                    { isValid === false? <Text style={style.errText}>Crenciais Invalidas</Text>: null}
+                    { isValid === false? <Text style={style.errText}>{errorText}</Text>: null}
                 </View>
                 <Pressable
                         style={style.botao}
                         onPress={cadastrar}
                     ><Text style={style.btText}>Confirmar</Text></Pressable>
-                <Link href='/'><Text style={style.link}>Ja tem conta?</Text></Link>
+                <Link href='/login'><Text style={style.link}>Ja tem conta?</Text></Link>
             </View>
         </View>
     )

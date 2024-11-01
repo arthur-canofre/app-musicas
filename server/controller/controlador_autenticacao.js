@@ -7,35 +7,35 @@ import jasonwebtoken from 'jsonwebtoken'
 const registro = async (req, res) => {
     const {nome, sobrenome, email, senha, dataNascimento} = req.body
     if(!nome || !sobrenome || !senha || !email || !dataNascimento){
-        res.send(sobrenome+ "recebaaa")
+        res.status(400).send("Preencha todos os campos")
         return
     } 
     const userExist = await User.findOne({ where: {email:email}})
     if(userExist){
-        res.send('usuario ja existe')
+        res.status(409).send('usuario ja existe')
         return
     }
     const senhaCripto = bcryptjs.hashSync(senha, 10)
 
     const teste = await User.create({nome, sobrenome, email, senha:senhaCripto, dataNascimento})
 
-    res.send(`usuario criado`)
+    res.status(200).send(`usuario criado`)
 }
 
 const login = async (req, res) => {
     const {email, senha} = req.body
     if(!senha || !email){
-        res.send("PREENCHA OS CAMPOS")
+        res.status(400).send("PREENCHA OS CAMPOS")
     } 
 
     const userExist = await User.findOne({ where: {email:email}})
     if(!userExist){
-        res.send('Ta errado')
+        res.status(401).send('Email ou senha invalidos')
         return
     }
     const senhaValida = bcryptjs.compareSync(senha, userExist.senha)
     if(!senhaValida){
-        res.send("Ta errado")
+        res.status(401).send('Email ou senha invalidos')
         return
     }
     
@@ -48,7 +48,7 @@ const login = async (req, res) => {
         'chavecriptografiajwt',
         {expiresIn: 1000*60*5}
     )
-    res.send({
+    res.status(200).send({
         msg: "Logado com sucesso!",
         tokenJWT: token 
     })

@@ -74,6 +74,7 @@ export default Login = () => {
     })
 
     const [isValid, setIsValid] = useState(null)
+    const [errorText, setErrorText] = useState("")
 
     const onChangeText = (value, campo) =>{
         const newCredenciais = {...credenciais, [campo]: value}
@@ -81,11 +82,11 @@ export default Login = () => {
     }
 
     const logar = async() => {
-        //console.log(credenciais)
         const dados = JSON.stringify(credenciais)
         console.log(dados)
         if (!credenciais.email || !credenciais.senha){
             setIsValid(false)
+            setErrorText("Preencha todos os campos")
             return
         }
         try{
@@ -97,8 +98,16 @@ export default Login = () => {
                 },
                 body: JSON.stringify(credenciais)
             })
-            const data = response;
-            console.log(data)
+            const data = response.status;
+
+            if(!response.ok){
+                switch (data) {
+                    case 401: [setIsValid(false), setErrorText("Senha ou email invalido")]
+                    break
+                }
+            }else{
+                alert("Login efetuado com sucesso")
+            }
         }catch(err){
             console.error(err)
         }
@@ -125,7 +134,7 @@ export default Login = () => {
                         value={credenciais.senha}
                         onChangeText={(value) => {onChangeText(value, "senha")}}
                     />
-                    { isValid === false? <Text style={style.errText}>Credenciais Invalidas</Text>: null}
+                    { isValid === false? <Text style={style.errText}>{errorText}</Text>: null}
                 </View>
                     <Pressable
                         style={style.botao}
