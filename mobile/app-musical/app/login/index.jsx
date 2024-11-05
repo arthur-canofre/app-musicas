@@ -1,5 +1,6 @@
-import React,{useState} from "react";
+import React,{useState, useContext} from "react";
 import { View, Text, TextInput, Pressable, StyleSheet, Image } from 'react-native'
+import { AppContext } from "../../scripts/appContext";
 import { Link } from 'expo-router'
 
 const style = StyleSheet.create({
@@ -75,6 +76,8 @@ export default Login = () => {
 
     const [isValid, setIsValid] = useState(null)
     const [errorText, setErrorText] = useState("")
+    
+    const {user, setUser} = useContext(AppContext)
 
     const onChangeText = (value, campo) =>{
         const newCredenciais = {...credenciais, [campo]: value}
@@ -87,6 +90,7 @@ export default Login = () => {
         if (!credenciais.email || !credenciais.senha){
             setIsValid(false)
             setErrorText("Preencha todos os campos")
+            setUser(credenciais.email)
             return
         }
         try{
@@ -133,6 +137,7 @@ export default Login = () => {
                         placeholder="Senha"
                         value={credenciais.senha}
                         onChangeText={(value) => {onChangeText(value, "senha")}}
+                        secureTextEntry={true}
                     />
                     { isValid === false? <Text style={style.errText}>{errorText}</Text>: null}
                 </View>

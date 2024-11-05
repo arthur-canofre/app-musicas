@@ -131,6 +131,7 @@ export default Cadastro = () => {
                         placeholder="Senha"
                         value={credenciais.senha}
                         onChangeText={(value) => {onChangeText(value, "senha")}}
+                        secureTextEntry={true}
                     />
                     <TextInput
                         style={style.input}

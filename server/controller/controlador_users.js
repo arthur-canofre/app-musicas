@@ -18,13 +18,13 @@ const getUser = async(req, res) => {
 }
 
 const deleteUsers = async (req, res) => {
-    const {id} = req.body
-    const user = await User.findOne({where: {id: id}})
+    const {email} = req.body
+    const user = await User.findOne({where: {email: email}})
     if(!user){
         res.send("Usuário não encontrado")
         return
     }
-    const deleta = await User.destroy({where: {id: id}})
+    const deleta = await User.destroy({where: {email: email}})
     res.send("Usuário deletado com sucesso")
 }
 
