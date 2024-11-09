@@ -1,7 +1,7 @@
 import React,{useState, useContext} from "react";
 import { View, Text, TextInput, Pressable, StyleSheet, Image } from 'react-native'
 import { AppContext } from "../../scripts/appContext";
-import { Link } from 'expo-router'
+import { Link, Redirect } from 'expo-router'
 
 const style = StyleSheet.create({
     fundo: {
@@ -90,7 +90,6 @@ export default Login = () => {
         if (!credenciais.email || !credenciais.senha){
             setIsValid(false)
             setErrorText("Preencha todos os campos")
-            setUser(credenciais.email)
             return
         }
         try{
@@ -110,15 +109,18 @@ export default Login = () => {
                     break
                 }
             }else{
-                alert("Login efetuado com sucesso")
+                alert("Login efetuado com sucesso") 
+                setUser(credenciais.email)
             }
         }catch(err){
             console.error(err)
         }
     }
-
+    
     return(
         <View style={style.fundo}>
+
+            {user && <Redirect href="/perfil"/>}
             <View style={style.container}>
                 <View style={style.containerTitulo}>
                     <Image style={style.img} source={require('../../assets/images/logo-app.png')}/>

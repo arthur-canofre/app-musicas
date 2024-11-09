@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native'
-import { Link } from "expo-router";
+import { Link, Redirect } from "expo-router";
+import { AppContext } from "../../scripts/appContext";
 
 const style = StyleSheet.create({
     fundo: {
@@ -67,6 +68,8 @@ export default Cadastro = () => {
     const [isValid, setIsValid] = useState(null)
     const [errorText, setErrorText] = useState("")
 
+    const {user, setUser} = useContext(AppContext)
+
     const onChangeText = (value, campo) =>{
         const newCredenciais = {...credenciais, [campo]: value}
         setCredenciais(newCredenciais)
@@ -98,6 +101,7 @@ export default Cadastro = () => {
                 }
             }else{
                 alert("Cadastro realizado com sucesso!")
+                setUser(credenciais.email)
             }
         }catch(err){
             console.error(err)
@@ -105,6 +109,8 @@ export default Cadastro = () => {
     }
     return(
         <View style={style.fundo}> 
+
+            {user && <Redirect href={"/perfil"}/>}
             <View style={style.container}>
                 <Text style={style.titulo}>Cadastro</Text>
                 <View style={style.inpContainer}>

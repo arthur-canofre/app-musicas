@@ -1,9 +1,9 @@
 import Express from "express";
 import { registro, login } from "../controller/controlador_autenticacao.js";
 
-const rotas = Express.Router()
+const rotasA = Express.Router()
 
-rotas.post('/registro', registro)
-rotas.post('/login', login)
+rotasA.post('/registro', registro)
+rotasA.post('/login', login)
 
-export { rotas }
+export { rotasA }
