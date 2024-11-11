@@ -111,6 +111,7 @@ export default Login = () => {
             }else{
                 alert("Login efetuado com sucesso") 
                 setUser(credenciais.email)
+                console.log(user)
             }
         }catch(err){
             console.error(err)

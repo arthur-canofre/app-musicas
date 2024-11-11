@@ -9,7 +9,8 @@ const getUser = async(req, res) => {
     const {email} = req.body
     const user = await User.findOne({where: {email: email}})
     if(!user){
-        res.status(404).send("Usuario nao encontrado.")
+        res.status(404).send(email)
+        return
     }
     res.send({
         nome: user.nome,
