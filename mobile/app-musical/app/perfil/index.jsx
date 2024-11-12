@@ -1,23 +1,28 @@
 import React, {useEffect, useContext, useState} from "react";
-import { Text, View, Image, Pressable, StyleSheet } from 'react-native'
+import { Text, View, Image, Pressable, StyleSheet, ImageBackground } from 'react-native'
 import { AppContext } from "../../scripts/appContext"
 import { Redirect } from "expo-router";
-// import { AdvancedImage } from 'cloudinary-react-native';
-// import { Cloudinary } from "@cloudinary/url-gen";
 import * as ImagePicker from 'expo-image-picker'
 
 const style = StyleSheet.create({
-    foto: {
-        width: 400,
-        height: 400
+    container: {
+        display: 'flex',
+        alignItems: 'center'
     },
+    foto: {
+        width: 200,
+        height: 200,
+        borderRadius: 400,
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end'
+    },
+    editIcon: {
+        width: 50,
+        height: 50,
+        borderRadius: 50
+    }
 })
 
-// const cld = new Cloudinary({
-//     cloud: {
-//         cloudName: 'demo'
-//     }
-// })
 
 export default Perfil = () => {
 
@@ -45,7 +50,8 @@ export default Perfil = () => {
         })
 
         if(!result.canceled){
-            setImage(result.assets[0].uri, 'fotoURI')
+            console.log(result.assets[0])
+            //setImage(result.assets[0].uri, 'fotoURI')
         }
     }
 
@@ -68,21 +74,46 @@ export default Perfil = () => {
                 console.error(error)
             }
         }
-        //getUser()
+       // getUser()
     }, [])
+
+    const handleSendImage = async() => {
+        try{
+            const data = {
+                "file": usuario.foto,
+                "upload_preset": "ml_default",
+                "name": "teste"
+            }
+            const res = await fetch('https://api.cloudinary.com/v1_1/dpiyzzueo/upload',
+            {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            const result = await res.json()
+            console.log(result)
+        }catch(e){
+            console.log(e)
+        }
+    }
     return(
-        <View>
+        <View style={style.container}>
             {/* { !user? <Redirect href={'/login'}/>:null } */}
             <View>
-                <Pressable onPress={() => pickImage()}>
-                    <Image 
-                        style={style.foto}
-                        source={usuario.foto? {uri: usuario.foto}: require('../../assets/images/profile.png')} 
-                    />
-                </Pressable>
+                <ImageBackground 
+                    style={style.foto}
+                    source={usuario.foto? {uri: usuario.foto}: require('../../assets/images/profile.png')} 
+                >
+                    <Pressable onPress={() => pickImage()}>
+                        <Image style={style.editIcon} source={require('../../assets/images/edit.png')}/>
+                    </Pressable>
+                </ImageBackground>
+                <Pressable onPress={handleSendImage}><Text>toma</Text></Pressable>
                 <Text>{`${usuario.nome} ${usuario.sobrenome}`}</Text>
             </View>
-
+            <View></View>
         </View>
     )
 }
