@@ -7,7 +7,7 @@ export default Home = () => {
     const {user, setUser} = useContext(AppContext)
     return(
         <View>
-            {!user && <Redirect href="/perfil"/>}
+            {!user && <Redirect href="/login"/>}
             <Text>{user}</Text>
         </View>
     )

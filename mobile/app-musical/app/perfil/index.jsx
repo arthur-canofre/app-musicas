@@ -1,5 +1,5 @@
 import React, {useEffect, useContext, useState} from "react";
-import { Text, View, Image, Pressable, StyleSheet, ImageBackground } from 'react-native'
+import { Text, View, Image, Pressable, StyleSheet, ImageBackground, Modal, Button } from 'react-native'
 import { AppContext } from "../../scripts/appContext"
 import { Redirect } from "expo-router";
 import * as ImagePicker from 'expo-image-picker'
@@ -12,7 +12,6 @@ const style = StyleSheet.create({
     foto: {
         width: 200,
         height: 200,
-        borderRadius: 400,
         alignItems: 'flex-end',
         justifyContent: 'flex-end'
     },
@@ -35,6 +34,8 @@ export default Perfil = () => {
         status: "inativo",
         foto: null
     })
+    const [newFoto, setNewFoto] = useState(usuario.foto)
+    const [visivel, setVisivel] = useState(false)
 
     const setImage = (image) => {
         var newUsuario = {...usuario, foto: image}
@@ -50,12 +51,13 @@ export default Perfil = () => {
         })
 
         if(!result.canceled){
-            console.log(result.assets[0])
-            //setImage(result.assets[0].uri, 'fotoURI')
+            setNewFoto(result.assets[0].uri, 'fotoURI')
+            setVisivel(true)
         }
     }
 
     useEffect(() => {
+        console.log(user)
         const getUser = async() =>{
             try{
                 const response = await fetch('http://localhost:8000/admin/pegarUm', {
@@ -69,18 +71,30 @@ export default Perfil = () => {
             )
             const data =  await response.json()
             setUsuario(data)
-            console.log(usuario)
             }catch(error){
                 console.error(error)
             }
         }
-       // getUser()
+       getUser()
     }, [])
+
+    useEffect(() => {
+        const changeImg = async() => {
+            const response = await fetch('http://localhost:8000/edit/editar', {
+                method: 'PUT',
+                headers:{
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({campo: 'foto', email: user, alt: usuario.foto})
+            })
+        }
+        changeImg()
+    }, [usuario.foto])
 
     const handleSendImage = async() => {
         try{
             const data = {
-                "file": usuario.foto,
+                "file": newFoto,
                 "upload_preset": "ml_default",
                 "name": "teste"
             }
@@ -93,24 +107,32 @@ export default Perfil = () => {
                 body: JSON.stringify(data)
             })
             const result = await res.json()
-            console.log(result)
+            setImage(result.url)
+            setVisivel(false)
         }catch(e){
             console.log(e)
         }
     }
     return(
         <View style={style.container}>
-            {/* { !user? <Redirect href={'/login'}/>:null } */}
+            { !user? <Redirect href={'/login'}/>:null }
+            <Modal
+                visible={visivel}
+            >
+                <Text>Você tem certeza?????</Text>
+                <Button title="Sim" onPress={handleSendImage}/>
+                <Button title="Não" onPress={() => setVisivel(false)}/>
+            </Modal>
             <View>
                 <ImageBackground 
                     style={style.foto}
-                    source={usuario.foto? {uri: usuario.foto}: require('../../assets/images/profile.png')} 
+                    source={usuario.foto? {uri: usuario.foto}: require('../../assets/images/profile.png')}
+                    borderRadius={200} 
                 >
                     <Pressable onPress={() => pickImage()}>
                         <Image style={style.editIcon} source={require('../../assets/images/edit.png')}/>
                     </Pressable>
                 </ImageBackground>
-                <Pressable onPress={handleSendImage}><Text>toma</Text></Pressable>
                 <Text>{`${usuario.nome} ${usuario.sobrenome}`}</Text>
             </View>
             <View></View>
