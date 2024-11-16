@@ -2,17 +2,17 @@ import { User } from "../db.js"
 import bcryptjs from "bcryptjs"
 
 const edit = async(req, res) => {
-    const { campo, email, alt } = req.body
-    const user = User.findOne({where: {email: email}})
+    const { email, alt } = req.body
+    const user = await User.findOne({where: {email: email}})
 
     if(!user){
         res.status(404).send("O usuario nao foi encontrado.")
         return
     }
-        User.update({ [campo]: alt },
-            {where: {email: email}} 
-        )
-   res.status(200).send("usuario editado com sucesso!")
+    User.update({ foto: alt },
+        {where: {email: email}} 
+    )
+    res.status(200).send("Usuario editado com sucesso")
 }
 
 const trocarSenha = async(req, res) => {
