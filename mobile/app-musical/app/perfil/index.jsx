@@ -98,14 +98,7 @@ export default Perfil = () => {
         return <Redirect href={'/login'} />;
     }
 
-    const [usuario, setUsuario] = useState({
-        nome: "Jose",
-        sobrenome: "Pereira",
-        email: "user",
-        dataNascimento: "20/01/2001",
-        status: "inativo",
-        foto: null
-    })
+    const [usuario, setUsuario] = useState({})
     const [newFoto, setNewFoto] = useState(usuario.foto)
     const [visivel, setVisivel] = useState(false)
     const [modalSenha, setModalSenha] = useState(false)
@@ -165,13 +158,11 @@ export default Perfil = () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email: user, alt: JSON.stringify(usuario.foto) })
-            }
-            )
-            const status = response
-            console.log(status)
-        } catch (error) {
-            console.error(error)
+                body: JSON.stringify({ email: user, alt: usuario.foto })
+            })
+            console.log(response)
+        } catch (e) {
+            console.log(e)
         }
     }
 
@@ -286,7 +277,7 @@ export default Perfil = () => {
                         <Image style={style.editIcon} source={require('../../assets/images/edit.png')} />
                     </Pressable>
                 </ImageBackground>
-                <Text style={style.textNome}>{`${usuario.foto} ${usuario.sobrenome}`}</Text>
+                <Text style={style.textNome}>{`${usuario.nome} ${usuario.sobrenome}`}</Text>
             </View>
             <View style={style.infoContainer}>
                 <View style={style.campoContainer}>
