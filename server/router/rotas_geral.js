@@ -5,7 +5,7 @@ const rotasG = Express.Router()
 
 rotasG.get("/getAlbuns", getAlbuns)
 rotasG.get("/getArtistas", getArtists)
-rotasG.post("getMusica", getMusica)
-rotasG.post("getAlbum", getAlbum)
+rotasG.post("/getMusica", getMusica)
+rotasG.post("/getAlbum", getAlbum)
 
 export {rotasG}

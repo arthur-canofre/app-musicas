@@ -14,6 +14,7 @@ app.use('/autenticacao', rotasA)
 app.use('/admin', rotasU)
 app.use('/edit', rotasE)
 app.use('/geral', rotasG)
+
 //criarTabelas()
 
 app.listen(8000)
