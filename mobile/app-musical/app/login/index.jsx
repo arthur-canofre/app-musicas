@@ -110,7 +110,7 @@ export default Login = () => {
                 }
             }else{
                 alert("Login efetuado com sucesso") 
-                setUser(credenciais.email)
+                setUser({...user, email: credenciais.email})
                 console.log(user)
             }
         }catch(err){
@@ -121,7 +121,7 @@ export default Login = () => {
     return(
         <View style={style.fundo}>
 
-            {user && <Redirect href="/perfil"/>}
+            {user.email && <Redirect href="/"/>}
             <View style={style.container}>
                 <View style={style.containerTitulo}>
                     <Image style={style.img} source={require('../../assets/images/logo-app.png')}/>

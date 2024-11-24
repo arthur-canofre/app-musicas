@@ -24,7 +24,7 @@ const User = sequelize.define('user', {
         allowNull: false,
         unique: true
     },
-    dataNasc: {
+    dataNascimento: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
     },
@@ -37,7 +37,7 @@ const User = sequelize.define('user', {
         allowNull: false,
         defaultValue: 'inativo'
     },
-    profile_image: {
+    foto: {
         type: Sequelize.DataTypes.STRING,
         allowNull: true,
     }

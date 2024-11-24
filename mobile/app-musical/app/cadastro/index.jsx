@@ -101,7 +101,7 @@ export default Cadastro = () => {
                 }
             }else{
                 alert("Cadastro realizado com sucesso!")
-                setUser(credenciais.email)
+                setUser({...user , email: credenciais.email})
             }
         }catch(err){
             console.error(err)
@@ -110,7 +110,7 @@ export default Cadastro = () => {
     return(
         <View style={style.fundo}> 
 
-            {user && <Redirect href={"/perfil"}/>}
+            {user.email && <Redirect href={"/"}/>}
             <View style={style.container}>
                 <Text style={style.titulo}>Cadastro</Text>
                 <View style={style.inpContainer}>

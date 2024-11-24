@@ -7,7 +7,7 @@ const getUsers = async(req, res) => {
 
 const getUser = async(req, res) => {
     const {email} = req.body
-    const user = await User.findOne({where: {email: email}})
+    const user = await User.findOne({where: {email: email}, attributes: ['nome', 'sobrenome', 'email', 'status', 'dataNascimento', 'foto']})
     if(!user){
         res.status(404).send(email)
         return
@@ -33,4 +33,13 @@ const deleteUsers = async (req, res) => {
     res.send("Usuário deletado com sucesso")
 }
 
-export { getUsers, deleteUsers, getUser }
+const getFoto = async (req, res) =>{
+    const {email} = req.body
+    const user = await User.findOne({where: {email: email}, attributes: ['foto']})
+
+    if(!user){
+        res.status(404).send("usuario nao encontrado")
+    }
+    res.status(200).send(user)
+}
+export { getUsers, deleteUsers, getUser, getFoto }

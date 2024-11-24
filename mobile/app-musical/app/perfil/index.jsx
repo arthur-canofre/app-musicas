@@ -1,8 +1,8 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Text, View, Image, Pressable, StyleSheet, ImageBackground, Modal, Button, TextInput } from 'react-native'
 import { AppContext } from "../../scripts/appContext"
-import { Redirect } from "expo-router";
 import * as ImagePicker from 'expo-image-picker'
+import { Link } from "expo-router";
 
 const style = StyleSheet.create({
     container: {
@@ -94,10 +94,6 @@ export default Perfil = () => {
 
     const { user, setUser } = useContext(AppContext)
 
-    if (!user) {
-        return <Redirect href={'/login'} />;
-    }
-
     const [usuario, setUsuario] = useState({})
     const [newFoto, setNewFoto] = useState(usuario.foto)
     const [visivel, setVisivel] = useState(false)
@@ -108,11 +104,6 @@ export default Perfil = () => {
     const [isValid, setIsValid] = useState(null)
     const [errorText, setErrorText] = useState("")
 
-
-    const setImage = (image) => {
-        var newUsuario = { ...usuario, foto: image }
-        setUsuario(newUsuario)
-    }
 
     const pickImage = async () => {
         var result = await ImagePicker.launchImageLibraryAsync({
@@ -137,34 +128,40 @@ export default Perfil = () => {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email: user })
+                    body: JSON.stringify({ email: user.email })
                 }
                 )
                 const data = await response.json()
                 setUsuario(data)
+                setUser({...user, profile: usuario.foto})
+                console.log(user)
             } catch (error) {
                 console.error(error)
             }
         }
-        user ? getUser() : null
+        getUser()
     }, [])
 
-    const changeImg = async () => {
-        console.log(usuario.foto)
-        try {
+    useEffect(() => {
+        const changeImg = async () => {
+        console.log(usuario.foto + "hh")
+        setUser({...user, profile: usuario.foto})
+        try { 
             const response = await fetch('http://localhost:8000/edit/editar', {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email: user, alt: usuario.foto })
-            })
-            console.log(response)
-        } catch (e) {
-            console.log(e)
+                body: JSON.stringify({ email: user.email, alt: usuario.foto })
+                })
+                console.log(response)
+            } catch (e) {
+                console.log(e)
+            }
         }
-    }
+        changeImg()
+    }, [usuario.foto])
 
     const changePassword = async () => {
         if (!senhaNova1 || !senhaOld || !senhaNova2) {
@@ -184,7 +181,7 @@ export default Perfil = () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email: user, senhaAntiga: senhaOld, senhaNova: senhaNova2 })
+                body: JSON.stringify({ email: user.email, senhaAntiga: senhaOld, senhaNova: senhaNova2 })
             })
             const result = response.status
             if (result == 401) {
@@ -214,9 +211,8 @@ export default Perfil = () => {
                     body: JSON.stringify(data)
                 })
             const result = await res.json()
-            setImage(result.url)
+            setUsuario({ ...usuario, foto: result.url })
             setVisivel(false)
-            changeImg()
         } catch (e) {
             console.log(e)
         }
