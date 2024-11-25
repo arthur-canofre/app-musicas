@@ -1,12 +1,26 @@
-import { StyleSheet, Pressable, Image, Text, View } from "react-native";
+import { StyleSheet, Image, Text, View } from "react-native";
 import { useContext } from "react";
 import { AppContext } from "../scripts/appContext";
+import { Link } from 'expo-router'
 
 const style = StyleSheet.create({
+    container: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#023E8A',
+        height: 65,
+        gap: 90,
+        paddingLeft: 5
+    },
     foto: {
         width: 50,
         height: 50,
         borderRadius: 50
+    },
+    texto: {
+        fontSize: 34,
+        color: '#CAF0F8'
     }
 })
 
@@ -36,11 +50,11 @@ export default Header = ({titulo}) => {
         //getFoto()
     }
     return(
-        <View>
-            <Text>{titulo}</Text>
-            <Pressable>
+        <View style={style.container}>
+            <Link href={'/profile'}>
                 <Image source={user.foto ? { uri: user.foto } : require('../assets/images/profile.png')} style={style.foto}/>
-            </Pressable>
+            </Link>
+            <Text style={style.texto}>{titulo}</Text>
         </View>
     )
 }

@@ -5,6 +5,21 @@ import { Redirect, Link } from "expo-router";
 import Header from "../components/Header";
 
 const style = StyleSheet.create({
+    artFoto: {
+        width: 60,
+        height: 60
+    },
+    container: {
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    listContainer: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    botao: {
+        flexDirection: 'column'
+    }
 
 })
 export default Home = () => {
@@ -27,7 +42,7 @@ export default Home = () => {
             "id": 2,
             "nome": "Michael Jackson",
             "bio": "Michael Jackson, conhecido como o \"Rei do Pop\", foi um cantor, compositor, dançarino e filantropo americano. Reconhecido como um dos artistas mais influentes de todos os tempos, ele lançou álbuns icônicos como \"Thriller\", \"Bad\" e \"Dangerous\". Jackson também revolucionou o mundo do entretenimento com suas performances e videoclipes inovadores, além de ser amplamente admirado por sua contribuição à música e à cultura global.",
-            "imageUrl": "https://fly.metroimg.com/upload/q_85,w_700/https://uploads.metroimg.com/wp-content/uploads/2024/02/10121216/Michael-Jackson-3.jpg",
+            "imageUrl": "https://i.scdn.co/image/ab6761610000e5eb997cc9a4aec335d46c9481fd",
             "createdAt": "2024-11-23T01:13:58.770Z",
             "updatedAt": "2024-11-23T01:13:58.770Z"
         },
@@ -99,7 +114,7 @@ export default Home = () => {
             "id": 7,
             "title": "Madvillainy",
             "releaseYear": 2004,
-            "coverImageUrl": "https://upload.wikimedia.org/wikipedia/en/a/a0/Madvillainy.jpg",
+            "coverImageUrl": "https://i.scdn.co/image/ab67616d0000b27374dc897ea75402db37ef239a",
             "createdAt": "2024-11-23T01:17:57.065Z",
             "updatedAt": "2024-11-23T01:17:57.065Z",
             "artista_id": 3
@@ -149,31 +164,37 @@ export default Home = () => {
     return(
         <View>
             <Header titulo="Home"/>
-            <View>
-                <Text>Artistas recomendados</Text>
-                <FlatList
-                    data={artistas}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({item}) => <Link href="/">
-                        <Image source={{uri: item.imageUrl}} style={style.artFoto}/>
-                        <Text>{item.nome}</Text>
-                        </Link>
-                    }
-                    horizontal
-                />
-            </View>
-            <View>
-                <Text>Albuns recomendados</Text>
-                <FlatList
-                    data={albuns}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({item}) => <Link href="/">
-                        <Image source={{uri: item.coverImageUrl}} style={style.artFoto}/>
-                        <Text>{item.title}</Text>
-                        </Link>
-                    }
-                    numColumns={2}
-                />
+            <View style={style.container}>
+                <View style={style.listContainer}>
+                    <Text>Artistas recomendados</Text>
+                    <FlatList
+                        data={artistas}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({item}) => <Link href="/">
+                                                    <View style={style.botao}>
+                                                        <Image resizeMethod="" source={{uri: item.imageUrl}} style={style.artFoto}/>
+                                                        <Text>{item.nome}</Text>
+                                                    </View>
+                                                </Link>
+                        }
+                        horizontal
+                    />
+                </View>
+                <View style={style.listContainer}>
+                    <Text>Albuns recomendados</Text>
+                    <FlatList
+                        data={albuns}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({item}) => <Link href="/">
+                                                        <View style={style.botao}>
+                                                            <Image resizeMode="contain" source={{uri: item.coverImageUrl}} style={style.artFoto}/>
+                                                            <Text>{item.title}</Text>
+                                                    </View>
+                                                </Link>
+                        }
+                        numColumns={2}
+                    />
+                </View>
             </View>
         </View>
     )

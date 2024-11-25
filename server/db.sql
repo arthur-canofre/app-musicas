@@ -10,7 +10,7 @@ INSERT INTO artists (nome, bio, "imageUrl", "createdAt", "updatedAt") VALUES
  (
     'Michael Jackson', 
     'Michael Jackson, conhecido como o "Rei do Pop", foi um cantor, compositor, dançarino e filantropo americano. Reconhecido como um dos artistas mais influentes de todos os tempos, ele lançou álbuns icônicos como "Thriller", "Bad" e "Dangerous". Jackson também revolucionou o mundo do entretenimento com suas performances e videoclipes inovadores, além de ser amplamente admirado por sua contribuição à música e à cultura global.',
-    'https://fly.metroimg.com/upload/q_85,w_700/https://uploads.metroimg.com/wp-content/uploads/2024/02/10121216/Michael-Jackson-3.jpg', 
+    'https://celebdial.s3.amazonaws.com/celeb_pic/michael-jackson.jpg', 
     NOW(), 
     NOW()
 ),
@@ -74,7 +74,7 @@ INSERT INTO albums (title, "releaseYear", "coverImageUrl", "createdAt", "updated
 (
     'Madvillainy', 
     2004, 
-    'https://upload.wikimedia.org/wikipedia/en/a/a0/Madvillainy.jpg', 
+    'https://i.scdn.co/image/ab67616d0000b27374dc897ea75402db37ef239a', 
     NOW(), 
     NOW(), 
     3
