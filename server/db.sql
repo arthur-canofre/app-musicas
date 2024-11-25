@@ -66,7 +66,7 @@ INSERT INTO albums (title, "releaseYear", "coverImageUrl", "createdAt", "updated
 (
     'Operation: Doomsday', 
     1999, 
-    'https://fr.rarevinyl.com/cdn/shop/files/mf-doom-operation-doomsday-us-cd-album-cdlp-mf-93-cd-847162_1000x898.jpg?v=1727530513', 
+    'https://i.scdn.co/image/ab67616d0000b2736ce90ec627a0198a8efd127f', 
     NOW(), 
     NOW(), 
     3

@@ -1,27 +1,47 @@
 import React, {useContext, useState, useEffect} from "react";
-import {View, Text, FlatList, Pressable, StyleSheet, Image} from 'react-native'
+import {View, Text, FlatList, Pressable, StyleSheet, Image, ScrollView} from 'react-native'
 import { AppContext } from "../scripts/appContext";
 import { Redirect, Link } from "expo-router";
 import Header from "../components/Header";
 
 const style = StyleSheet.create({
     artFoto: {
-        width: 60,
-        height: 60
+        width: 140,
+        height: 140,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20
+    },
+    albFoto: {
+        width: 180,
+        height: 180,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20
     },
     container: {
         display: 'flex',
-        justifyContent: 'center'
+        //justifyContent: 'flex-start'
     },
     listContainer: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        gap: 10
     },
-    botao: {
-        display: 'flex',
+    botaoArt: {
         alignItems: 'center',
+        justifyContent: 'flex-start',
+        width: 140,
+        height: 180,
+        backgroundColor: '#0096C7',
+        borderRadius: 20
+    },
+    botaoAlb: {
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        width: 180,
+        height: 210,
+        backgroundColor: '#0096C7',
+        borderRadius: 20
     }
-
 })
 export default Home = () => {
     const {user, setUser} = useContext(AppContext)
@@ -106,7 +126,7 @@ export default Home = () => {
             "id": 6,
             "title": "Operation: Doomsday",
             "releaseYear": 1999,
-            "coverImageUrl": "https://fr.rarevinyl.com/cdn/shop/files/mf-doom-operation-doomsday-us-cd-album-cdlp-mf-93-cd-847162_1000x898.jpg?v=1727530513",
+            "coverImageUrl": "https://i.scdn.co/image/ab67616d0000b2736ce90ec627a0198a8efd127f",
             "createdAt": "2024-11-23T01:15:00.513Z",
             "updatedAt": "2024-11-23T01:15:00.513Z",
             "artista_id": 3
@@ -172,13 +192,14 @@ export default Home = () => {
                         data={artistas}
                         keyExtractor={(item) => item.id}
                         renderItem={({item}) => <Link href="/">
-                                                    <View style={style.botao}>
+                                                    <View style={style.botaoArt}>
                                                         <Image resizeMethod="" source={{uri: item.imageUrl}} style={style.artFoto}/>
                                                         <Text>{item.nome}</Text>
                                                     </View>
                                                 </Link>
                         }
                         horizontal
+                        contentContainerStyle={{gap: 5}}
                     />
                 </View>
                 <View style={style.listContainer}>
@@ -187,13 +208,15 @@ export default Home = () => {
                         data={albuns}
                         keyExtractor={(item) => item.id}
                         renderItem={({item}) => <Link href="/">
-                                                    <View style={style.botao}>
-                                                        <Image resizeMode="contain" source={{uri: item.coverImageUrl}} style={style.artFoto}/>
+                                                    <View style={style.botaoAlb}>
+                                                        <Image resizeMode="contain" source={{uri: item.coverImageUrl}} style={style.albFoto}/>
                                                         <Text>{item.title}</Text>
                                                     </View>
                                                 </Link>
                         }
                         numColumns={2}
+                        contentContainerStyle={{gap: 10}}
+                        columnWrapperStyle={{gap: 10}}
                     />
                 </View>
             </View>
