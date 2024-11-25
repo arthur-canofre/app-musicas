@@ -18,7 +18,8 @@ const style = StyleSheet.create({
         justifyContent: 'center'
     },
     botao: {
-        flexDirection: 'column'
+        display: 'flex',
+        alignItems: 'center',
     }
 
 })
@@ -60,7 +61,7 @@ export default Home = () => {
             "id": 1,
             "title": "The College Dropout",
             "releaseYear": 2004,
-            "coverImageUrl": "https://i.ytimg.com/vi/6Misle653EM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDETFNOkVF7CE55YEXG1gJruOWrpw",
+            "coverImageUrl": "https://image-cdn-fa.spotifycdn.com/image/ab67706c0000da847a45ed9366f92446f48eb588",
             "createdAt": "2024-11-23T01:15:00.513Z",
             "updatedAt": "2024-11-23T01:15:00.513Z",
             "artista_id": 1
@@ -186,9 +187,9 @@ export default Home = () => {
                         data={albuns}
                         keyExtractor={(item) => item.id}
                         renderItem={({item}) => <Link href="/">
-                                                        <View style={style.botao}>
-                                                            <Image resizeMode="contain" source={{uri: item.coverImageUrl}} style={style.artFoto}/>
-                                                            <Text>{item.title}</Text>
+                                                    <View style={style.botao}>
+                                                        <Image resizeMode="contain" source={{uri: item.coverImageUrl}} style={style.artFoto}/>
+                                                        <Text>{item.title}</Text>
                                                     </View>
                                                 </Link>
                         }

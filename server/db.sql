@@ -10,7 +10,7 @@ INSERT INTO artists (nome, bio, "imageUrl", "createdAt", "updatedAt") VALUES
  (
     'Michael Jackson', 
     'Michael Jackson, conhecido como o "Rei do Pop", foi um cantor, compositor, dançarino e filantropo americano. Reconhecido como um dos artistas mais influentes de todos os tempos, ele lançou álbuns icônicos como "Thriller", "Bad" e "Dangerous". Jackson também revolucionou o mundo do entretenimento com suas performances e videoclipes inovadores, além de ser amplamente admirado por sua contribuição à música e à cultura global.',
-    'https://celebdial.s3.amazonaws.com/celeb_pic/michael-jackson.jpg', 
+    'https://i.scdn.co/image/ab6761610000e5eb997cc9a4aec335d46c9481fd', 
     NOW(), 
     NOW()
 ),
@@ -26,7 +26,7 @@ INSERT INTO albums (title, "releaseYear", "coverImageUrl", "createdAt", "updated
 (
     'The College Dropout', 
     2004, 
-    'https://i.ytimg.com/vi/6Misle653EM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDETFNOkVF7CE55YEXG1gJruOWrpw', 
+    'https://image-cdn-fa.spotifycdn.com/image/ab67706c0000da847a45ed9366f92446f48eb588', 
     NOW(), 
     NOW(), 
     1
