@@ -34,7 +34,7 @@ INSERT INTO albums (title, "releaseYear", "coverImageUrl", "createdAt", "updated
 (
     'Late Registration', 
     2005, 
-    'https://upload.wikimedia.org/wikipedia/pt/b/b4/Lateregistration.jpg', 
+    'https://i.scdn.co/image/ab67616d0000b273428d2255141c2119409a31b2', 
     NOW(), 
     NOW(), 
     1

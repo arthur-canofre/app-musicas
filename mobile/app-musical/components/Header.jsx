@@ -16,7 +16,8 @@ const style = StyleSheet.create({
     foto: {
         width: 50,
         height: 50,
-        borderRadius: 50
+        borderRadius: 50,
+        backgroundColor: 'white'
     },
     texto: {
         fontSize: 34,
@@ -51,10 +52,13 @@ export default Header = ({titulo}) => {
     }
     return(
         <View style={style.container}>
+            <Link href={'/'}>
+                <Image source={require('../assets/images/home.png')} style={style.foto}/>
+            </Link>
+            <Text style={style.texto}>{titulo}</Text>
             <Link href={'/profile'}>
                 <Image source={user.foto ? { uri: user.foto } : require('../assets/images/profile.png')} style={style.foto}/>
             </Link>
-            <Text style={style.texto}>{titulo}</Text>
         </View>
     )
 }

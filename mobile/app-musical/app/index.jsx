@@ -18,13 +18,15 @@ const style = StyleSheet.create({
         borderTopRightRadius: 20
     },
     container: {
-        display: 'flex',
-        //justifyContent: 'flex-start'
+        //display: 'flex',
+        //justifyContent: 'flex-start',
+        backgroundColor: '#03045E'
     },
     listContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 10
+        gap: 10,
+        margin: 10
     },
     botaoArt: {
         alignItems: 'center',
@@ -32,22 +34,28 @@ const style = StyleSheet.create({
         width: 140,
         height: 180,
         backgroundColor: '#0096C7',
-        borderRadius: 20
+        borderRadius: 20,
     },
     botaoAlb: {
         alignItems: 'center',
         justifyContent: 'flex-start',
         width: 180,
-        height: 210,
+        height: 230,
         backgroundColor: '#0096C7',
         borderRadius: 20
+    },
+    titulo: {
+        fontSize: 30,
+        color: '#CAF0F8',
+        fontWeight: 'bold',
+        paddingBottom: 30
     }
 })
 export default Home = () => {
     const {user, setUser} = useContext(AppContext)
 
     if (!user.email) {
-       // return <Redirect href={'/login'} />;
+       return <Redirect href={'/musica'} />;
     }
     
     const [artistas, setArtistas] = useState([
@@ -90,7 +98,7 @@ export default Home = () => {
             "id": 2,
             "title": "Late Registration",
             "releaseYear": 2005,
-            "coverImageUrl": "https://upload.wikimedia.org/wikipedia/pt/b/b4/Lateregistration.jpg",
+            "coverImageUrl": "https://i.scdn.co/image/ab67616d0000b273428d2255141c2119409a31b2",
             "createdAt": "2024-11-23T01:15:00.513Z",
             "updatedAt": "2024-11-23T01:15:00.513Z",
             "artista_id": 1
@@ -183,43 +191,46 @@ export default Home = () => {
     },[])
 
     return(
-        <View>
+        <ScrollView>
             <Header titulo="Home"/>
             <View style={style.container}>
                 <View style={style.listContainer}>
-                    <Text>Artistas recomendados</Text>
+                    <Text style={style.titulo}>Artistas recomendados</Text>
                     <FlatList
                         data={artistas}
                         keyExtractor={(item) => item.id}
                         renderItem={({item}) => <Link href="/">
                                                     <View style={style.botaoArt}>
                                                         <Image resizeMethod="" source={{uri: item.imageUrl}} style={style.artFoto}/>
-                                                        <Text>{item.nome}</Text>
+                                                        <Text style={{fontWeight: 'bold', fontSize: 17}}>{item.nome}</Text>
                                                     </View>
                                                 </Link>
                         }
                         horizontal
                         contentContainerStyle={{gap: 5}}
+                        showsHorizontalScrollIndicator={false}
                     />
                 </View>
                 <View style={style.listContainer}>
-                    <Text>Albuns recomendados</Text>
+                    <Text style={style.titulo}>Albuns recomendados</Text>
                     <FlatList
                         data={albuns}
                         keyExtractor={(item) => item.id}
                         renderItem={({item}) => <Link href="/">
                                                     <View style={style.botaoAlb}>
                                                         <Image resizeMode="contain" source={{uri: item.coverImageUrl}} style={style.albFoto}/>
-                                                        <Text>{item.title}</Text>
+                                                        <Text style={{fontWeight: 'bold', fontSize: 17}}>{item.title}</Text>
+                                                        <Text>{artistas[item.artista_id - 1].nome}</Text>
                                                     </View>
                                                 </Link>
                         }
                         numColumns={2}
                         contentContainerStyle={{gap: 10}}
                         columnWrapperStyle={{gap: 10}}
+                        scrollEnabled={false}
                     />
                 </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
