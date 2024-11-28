@@ -1,3 +1,4 @@
+import { where } from "sequelize"
 import { Artista, Musica, Album } from "../db.js"
 
 const getAlbuns = async(req, res) => {
@@ -23,10 +24,11 @@ const getAlbum = async(req, res) => {
 const getMusica = async(req, res) => {
     const {id} = req.body
     const musica = await Musica.findOne({where: {id: id}})
+    const album = await Album.findOne({where: {id: musica.album_id}}, {attributes: ["coverImageUrl"]})
     if(!musica){
         return res.status(404).send("Musica não encontrada")
     }
-    res.status(200).send(musica)
+    res.status(200).send({...musica.dataValues, foto: album.coverImageUrl})
 }
 
 export {getAlbum, getArtists, getMusica, getAlbuns}

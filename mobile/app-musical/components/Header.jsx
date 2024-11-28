@@ -8,9 +8,9 @@ const style = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         backgroundColor: '#023E8A',
         height: 65,
-        gap: 90,
         paddingLeft: 5
     },
     foto: {
