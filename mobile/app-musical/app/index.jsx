@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from "react";
 import {View, Text, FlatList, Pressable, StyleSheet, Image, ScrollView} from 'react-native'
 import { AppContext } from "../scripts/appContext";
-import { Redirect, Link } from "expo-router";
+import { Redirect } from "expo-router";
 import Header from "../components/Header";
 
 const style = StyleSheet.create({
@@ -53,13 +53,19 @@ const style = StyleSheet.create({
 })
 export default Home = () => {
     const {user, setUser} = useContext(AppContext)
+    const {artista, setArtista} = useContext(AppContext)
     const {album, setAlbum} = useContext(AppContext)
 
     if (!user.email) {
-       return <Redirect href={'/musica'} />;
+       return <Redirect href={'/login'} />;
     }
+
+    if(artista){
+        return <Redirect href={'/artista'}/>
+    }
+
     if(album){
-        return <Redirect href={'/'}/>
+        return <Redirect href={'/album'}/>
     }
     
     const [artistas, setArtistas] = useState([])
@@ -114,12 +120,12 @@ export default Home = () => {
                     <FlatList
                         data={artistas}
                         keyExtractor={(item) => item.id}
-                        renderItem={({item}) => <Link href="/">
+                        renderItem={({item}) => <Pressable onPress={() => setArtista(item.id)}>
                                                     <View style={style.botaoArt}>
                                                         <Image resizeMethod="" source={{uri: item.imageUrl}} style={style.artFoto}/>
                                                         <Text style={{fontWeight: 'bold', fontSize: 17}}>{item.nome}</Text>
                                                     </View>
-                                                </Link>
+                                                </Pressable>
                         }
                         horizontal
                         contentContainerStyle={{gap: 5}}
@@ -131,13 +137,13 @@ export default Home = () => {
                     <FlatList
                         data={albuns}
                         keyExtractor={(item) => item.id}
-                        renderItem={({item}) => <Link href="/">
+                        renderItem={({item}) => <Pressable onPress={() => setAlbum(item.id)}>
                                                     <View style={style.botaoAlb}>
                                                         <Image resizeMode="contain" source={{uri: item.coverImageUrl}} style={style.albFoto}/>
                                                         <Text style={{fontWeight: 'bold', fontSize: 17}}>{item.title}</Text>
                                                         <Text>{artistas[item.artista_id - 1].nome}</Text>
                                                     </View>
-                                                </Link>
+                                                </Pressable>
                         }
                         numColumns={2}
                         contentContainerStyle={{gap: 10}}

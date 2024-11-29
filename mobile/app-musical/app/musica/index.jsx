@@ -58,6 +58,7 @@ export default home = () =>{
                 if(response.ok){
                 const data = await response.json()
                 setMusicaData(data)
+                setMusica(null)
                 }
             }catch(e){
                 console.log(e)

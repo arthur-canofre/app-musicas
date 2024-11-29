@@ -48,7 +48,7 @@ export default Header = ({titulo}) => {
     }
 
     if(!user.profile){
-        //getFoto()
+        getFoto()
     }
     return(
         <View style={style.container}>
@@ -56,8 +56,8 @@ export default Header = ({titulo}) => {
                 <Image source={require('../assets/images/home.png')} style={style.foto}/>
             </Link>
             <Text style={style.texto}>{titulo}</Text>
-            <Link href={'/profile'}>
-                <Image source={user.foto ? { uri: user.foto } : require('../assets/images/profile.png')} style={style.foto}/>
+            <Link href={'/perfil'}>
+                <Image source={user.profile ? { uri: user.profile } : require('../assets/images/profile.png')} style={style.foto}/>
             </Link>
         </View>
     )

@@ -3,6 +3,7 @@ import { Text, View, Image, Pressable, StyleSheet, ImageBackground, Modal, Butto
 import { AppContext } from "../../scripts/appContext"
 import * as ImagePicker from 'expo-image-picker'
 import { Link } from "expo-router";
+import Header from "../../components/Header";
 
 const style = StyleSheet.create({
     container: {
@@ -26,7 +27,7 @@ const style = StyleSheet.create({
     },
     infoContainer: {
         marginHorizontal: 10,
-        height: "60%",
+        //height: "60%",
         backgroundColor: "#006296",
         borderRadius: 30,
         gap: 10,
@@ -218,77 +219,80 @@ export default Perfil = () => {
         }
     }
     return (
-        <View style={style.container}>
-            <Modal
-                visible={modalSenha}
-            >
-                <View style={style.modalSenha}>
-                    <Text style={style.titulo}>Trocar senha</Text>
-                    <TextInput
-                        style={style.input}
-                        value={senhaOld}
-                        onChangeText={(value) => setSenhaOld(value)}
-                        placeholder="senha atual"
-                    />
-                    <TextInput
-                        style={style.input}
-                        value={senhaNova1}
-                        onChangeText={(value) => setSenhaNova1(value)}
-                        placeholder="Nova senha"
-                    />
-                    <TextInput
-                        style={style.input}
-                        value={senhaNova2}
-                        onChangeText={(value) => setSenhaNova2(value)}
-                        placeholder="confirme a nova senha"
-                    /> 
-                    {!isValid && <Text style={{ color: 'red' }}>{errorText}</Text>}
-                    <Pressable onPress={changePassword} style={style.botao}>
-                        <Text>Confirmar</Text>
-                    </Pressable>
-                </View>
-            </Modal>
-            <Modal
-                visible={visivel}
-            >
-                <View style={style.modalSenha}>
-                    <Text style={style.titulo}>Você tem certeza?</Text>
-                    <View>
-                        <Pressable onPress={handleSendImage} style={{...style.botao, backgroundColor: "green"}}>
-                            <Text style={style.btText}>sim</Text>
-                        </Pressable>                        
-                        <Pressable onPress={() => setVisivel(false)} style={{...style.botao, backgroundColor: "red"}}>
-                            <Text style={style.btText}>nao</Text>
-                        </Pressable>                  
-                    </View>
-                </View>
-            </Modal>
-            <View style={style.fotoContainer}>
-                <ImageBackground
-                    style={style.foto}
-                    source={usuario.foto ? { uri: usuario.foto } : require('../../assets/images/profile.png')}
-                    borderRadius={200}
+        <View style={{backgroundColor: '#03045E', height: '100%'}}>
+            <Header titulo="album"/>
+            <View style={style.container}>
+                <Modal
+                    visible={modalSenha}
                 >
-                    <Pressable onPress={() => pickImage()}>
-                        <Image style={style.editIcon} source={require('../../assets/images/edit.png')} />
+                    <View style={style.modalSenha}>
+                        <Text style={style.titulo}>Trocar senha</Text>
+                        <TextInput
+                            style={style.input}
+                            value={senhaOld}
+                            onChangeText={(value) => setSenhaOld(value)}
+                            placeholder="senha atual"
+                        />
+                        <TextInput
+                            style={style.input}
+                            value={senhaNova1}
+                            onChangeText={(value) => setSenhaNova1(value)}
+                            placeholder="Nova senha"
+                        />
+                        <TextInput
+                            style={style.input}
+                            value={senhaNova2}
+                            onChangeText={(value) => setSenhaNova2(value)}
+                            placeholder="confirme a nova senha"
+                        /> 
+                        {!isValid && <Text style={{ color: 'red' }}>{errorText}</Text>}
+                        <Pressable onPress={changePassword} style={style.botao}>
+                            <Text>Confirmar</Text>
+                        </Pressable>
+                    </View>
+                </Modal>
+                <Modal
+                    visible={visivel}
+                >
+                    <View style={style.modalSenha}>
+                        <Text style={style.titulo}>Você tem certeza?</Text>
+                        <View>
+                            <Pressable onPress={handleSendImage} style={{...style.botao, backgroundColor: "green"}}>
+                                <Text style={style.btText}>sim</Text>
+                            </Pressable>                        
+                            <Pressable onPress={() => setVisivel(false)} style={{...style.botao, backgroundColor: "red"}}>
+                                <Text style={style.btText}>nao</Text>
+                            </Pressable>                  
+                        </View>
+                    </View>
+                </Modal>
+                <View style={style.fotoContainer}>
+                    <ImageBackground
+                        style={style.foto}
+                        source={usuario.foto ? { uri: usuario.foto } : require('../../assets/images/profile.png')}
+                        borderRadius={200}
+                    >
+                        <Pressable onPress={() => pickImage()}>
+                            <Image style={style.editIcon} source={require('../../assets/images/edit.png')} />
+                        </Pressable>
+                    </ImageBackground>
+                    <Text style={style.textNome}>{`${usuario.nome} ${usuario.sobrenome}`}</Text>
+                </View>
+                <View style={style.infoContainer}>
+                    <View style={style.campoContainer}>
+                        <Text style={style.textCampo}>Email:</Text>
+                        <Text style={style.textCampo2}>{usuario.email}</Text>
+                    </View>
+                    <View style={style.campoContainer}>
+                        <Text style={style.textCampo}>Data de Nascimento:</Text>
+                        <Text style={style.textCampo2}>{usuario.dataNascimento}</Text>
+                    </View>
+                    <Pressable
+                        onPress={() => setModalSenha(true)}
+                        style={style.botao}>
+                        <Text style={style.btText}>Mudar senha</Text>
                     </Pressable>
-                </ImageBackground>
-                <Text style={style.textNome}>{`${usuario.nome} ${usuario.sobrenome}`}</Text>
-            </View>
-            <View style={style.infoContainer}>
-                <View style={style.campoContainer}>
-                    <Text style={style.textCampo}>Email:</Text>
-                    <Text style={style.textCampo2}>{usuario.email}</Text>
                 </View>
-                <View style={style.campoContainer}>
-                    <Text style={style.textCampo}>Data de Nascimento:</Text>
-                    <Text style={style.textCampo2}>{usuario.dataNascimento}</Text>
-                </View>
-                <Pressable
-                    onPress={() => setModalSenha(true)}
-                    style={style.botao}>
-                    <Text style={style.btText}>Mudar senha</Text>
-                </Pressable>
             </View>
         </View>
     )
