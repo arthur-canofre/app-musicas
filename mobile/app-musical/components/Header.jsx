@@ -1,3 +1,4 @@
+import React from "react";
 import { StyleSheet, Image, Text, View } from "react-native";
 import { useContext } from "react";
 import { AppContext } from "../scripts/appContext";
@@ -57,7 +58,7 @@ export default Header = ({titulo}) => {
             </Link>
             <Text style={style.texto}>{titulo}</Text>
             <Link href={'/perfil'}>
-                <Image source={user.profile ? { uri: user.profile } : require('../assets/images/profile.png')} style={style.foto}/>
+                <Image source={{ uri: user.profile }} style={style.foto}/>
             </Link>
         </View>
     )

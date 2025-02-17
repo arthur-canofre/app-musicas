@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Text, View, Image, Pressable, StyleSheet, FlatList, ScrollView } from 'react-native'
+import AlbumBt from "../../components/AlbumBt";
 import { AppContext } from "../../scripts/appContext"
 import { Link, Redirect } from "expo-router";
 import Header from "../../components/Header";
@@ -71,6 +72,9 @@ const style = StyleSheet.create({
         height: 180,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20
+    },
+    fotoContainer: {
+        alignItems: 'center'
     }
 })
 
@@ -78,12 +82,6 @@ const style = StyleSheet.create({
 export default Artista = () => {
 
     const {artista, setArtista} = useContext(AppContext)
-    const {album, setAlbum} = useContext(AppContext)
-    
-    if(album){
-        return <Redirect href={`/album`}/>
-    }
-
     const [artistaData, setArtistaData] = useState({})
     const [albums, setAlbuns] = useState([])
 
@@ -135,14 +133,7 @@ export default Artista = () => {
                     <FlatList
                         data={albums}
                         keyExtractor={(item) => item.id}
-                        renderItem={({item}) => <Pressable onPress={() => setAlbum(item.id)}>
-                                                    <View style={style.botaoAlb}>
-                                                        <Image resizeMode="contain" source={{uri: item.coverImageUrl}} style={style.albFoto}/>
-                                                        <Text style={{fontWeight: 'bold', fontSize: 17}}>{item.title}</Text>
-                                                        <Text>{artistaData.nome}</Text>
-                                                    </View>
-                                                </Pressable>
-                        }
+                        renderItem={({item}) => <AlbumBt item = {item} artNome = {artistaData.nome}/>}
                         numColumns={2}
                         contentContainerStyle={{gap: 10}}
                         columnWrapperStyle={{gap: 10}}

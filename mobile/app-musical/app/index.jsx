@@ -1,22 +1,12 @@
 import React, {useContext, useState, useEffect} from "react";
 import {View, Text, FlatList, Pressable, StyleSheet, Image, ScrollView} from 'react-native'
+import AlbumBt from "../components/AlbumBt";
+import ArtBt from "../components/ArtBt";
 import { AppContext } from "../scripts/appContext";
 import { Redirect } from "expo-router";
 import Header from "../components/Header";
 
 const style = StyleSheet.create({
-    artFoto: {
-        width: 140,
-        height: 140,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20
-    },
-    albFoto: {
-        width: 180,
-        height: 180,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20
-    },
     container: {
         //display: 'flex',
         //justifyContent: 'flex-start',
@@ -28,22 +18,6 @@ const style = StyleSheet.create({
         gap: 10,
         margin: 10
     },
-    botaoArt: {
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        width: 140,
-        height: 180,
-        backgroundColor: '#0096C7',
-        borderRadius: 20,
-    },
-    botaoAlb: {
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        width: 180,
-        height: 230,
-        backgroundColor: '#0096C7',
-        borderRadius: 20
-    },
     titulo: {
         fontSize: 30,
         color: '#CAF0F8',
@@ -53,19 +27,9 @@ const style = StyleSheet.create({
 })
 export default Home = () => {
     const {user, setUser} = useContext(AppContext)
-    const {artista, setArtista} = useContext(AppContext)
-    const {album, setAlbum} = useContext(AppContext)
 
     if (!user.email) {
        return <Redirect href={'/login'} />;
-    }
-
-    if(artista){
-        return <Redirect href={'/artista'}/>
-    }
-
-    if(album){
-        return <Redirect href={'/album'}/>
     }
     
     const [artistas, setArtistas] = useState([])
@@ -120,13 +84,7 @@ export default Home = () => {
                     <FlatList
                         data={artistas}
                         keyExtractor={(item) => item.id}
-                        renderItem={({item}) => <Pressable onPress={() => setArtista(item.id)}>
-                                                    <View style={style.botaoArt}>
-                                                        <Image resizeMethod="" source={{uri: item.imageUrl}} style={style.artFoto}/>
-                                                        <Text style={{fontWeight: 'bold', fontSize: 17}}>{item.nome}</Text>
-                                                    </View>
-                                                </Pressable>
-                        }
+                        renderItem={({item}) => <ArtBt item={item}/>}
                         horizontal
                         contentContainerStyle={{gap: 5}}
                         showsHorizontalScrollIndicator={false}
@@ -137,14 +95,7 @@ export default Home = () => {
                     <FlatList
                         data={albuns}
                         keyExtractor={(item) => item.id}
-                        renderItem={({item}) => <Pressable onPress={() => setAlbum(item.id)}>
-                                                    <View style={style.botaoAlb}>
-                                                        <Image resizeMode="contain" source={{uri: item.coverImageUrl}} style={style.albFoto}/>
-                                                        <Text style={{fontWeight: 'bold', fontSize: 17}}>{item.title}</Text>
-                                                        <Text>{artistas[item.artista_id - 1].nome}</Text>
-                                                    </View>
-                                                </Pressable>
-                        }
+                        renderItem={({item}) => <AlbumBt item = {item} artNome = {artistas[item.artista_id - 1].nome}/>}
                         numColumns={2}
                         contentContainerStyle={{gap: 10}}
                         columnWrapperStyle={{gap: 10}}

@@ -38,8 +38,8 @@ const getFoto = async (req, res) =>{
     const user = await User.findOne({where: {email: email}, attributes: ['foto']})
 
     if(!user){
-        res.status(404).send("usuario nao encontrado")
+       return res.status(404).send("usuario nao encontrado")
     }
-    res.status(200).send(user)
+    return res.status(200).send(user)
 }
 export { getUsers, deleteUsers, getUser, getFoto }

@@ -39,7 +39,8 @@ const User = sequelize.define('user', {
     },
     foto: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+        defaultValue: 'http://res.cloudinary.com/dpiyzzueo/image/upload/v1739813987/ydar2v8uc4comisuqcfd.png'
     }
 })
 

@@ -145,7 +145,7 @@ export default Perfil = () => {
 
     useEffect(() => {
         const changeImg = async () => {
-        console.log(usuario.foto + "hh")
+        console.log(usuario.foto + " hh")
         setUser({...user, profile: usuario.foto})
         try { 
             const response = await fetch('http://localhost:8000/edit/editar', {

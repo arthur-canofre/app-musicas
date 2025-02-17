@@ -58,14 +58,13 @@ export default home = () =>{
                 if(response.ok){
                 const data = await response.json()
                 setMusicaData(data)
-                setMusica(null)
                 }
             }catch(e){
                 console.log(e)
             }
         }
         getMusica()
-    },[])
+    },[musica])
 
     return(
         <View style={{backgroundColor: '#03045E', height: `100%`}}>
@@ -79,13 +78,13 @@ export default home = () =>{
                 </View>
                 <View style={{borderColor: 'white', borderBottomWidth: 2, width: 300}}></View>
                 <View style={style.btContainer}>
-                    <Pressable>
+                    <Pressable onPress={() => setMusica(musica - 1)}>
                         <Image source={require('../../assets/images/previous.png')} style={style.btImg}/>
                     </Pressable>
                     <Pressable onPress={() => setIsPlayng(!isPlaying)}>
                         <Image source={isPlaying? require('../../assets/images/pause.png') : require('../../assets/images/play.png')} style={{...style.btImg, width: 60, height: 60}}/>
                     </Pressable>
-                    <Pressable>
+                    <Pressable onPress={() => setMusica(musica + 1)}>
                         <Image source={require('../../assets/images/next.png')} style={style.btImg}/>
                     </Pressable>
                 </View>

@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import { View, StyleSheet, Text, Image, FlatList, Pressable, ScrollView } from "react-native";
+import MusicBt from "../../components/MusicBt";
 import { AppContext } from "../../scripts/appContext";
 import { Redirect } from "expo-router";
 import Header from "../../components/Header";
@@ -14,19 +15,6 @@ const style = StyleSheet.create({
         alignItems: 'center',
         gap: 10,
         marginTop: 20
-    },
-    musicContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '90%',
-        padding: 10,
-        borderBottomColor: 'black',
-        borderBottomWidth: 2
-    },
-    musFoto: {
-        width: 65,
-        height: 65
     },
     titulo: {
         color: 'white',
@@ -44,11 +32,6 @@ const style = StyleSheet.create({
 
 export default Album = () => {
     const {album, setAlbum} = useContext(AppContext)
-    const {musica, setMusica} = useContext(AppContext)
-
-    if(musica){
-        return <Redirect href={'/musica'}/>
-    }
 
     const [albumData, setAlbumData] = useState({})
     const [musicsData, setMusicsData] = useState([])
@@ -69,7 +52,6 @@ export default Album = () => {
                 const data = await response.json()
                 setAlbumData(data.album)
                 setMusicsData(data.musicas)
-                setAlbum(null)
             }
             }catch(e){
                 console.log(e)
@@ -90,15 +72,7 @@ export default Album = () => {
                     <FlatList
                         data={musicsData}
                         keyExtractor={(item) => item.id}
-                        renderItem={({item}) => <Pressable onPress={() => setMusica(item.id)}>
-                                                    <View style={style.musicContainer}>
-                                                        <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
-                                                            <Image resizeMethod="" source={{uri: albumData.coverImageUrl}} style={style.musFoto}/>
-                                                            <Text style={{fontWeight: 'bold', fontSize: 17}}>{item.titulo}</Text>
-                                                        </View>
-                                                        <Text>{Math.trunc(item.duracao/60).toString().padStart(2, '0')}:{(item.duracao % 60).toString().padStart(2, '0')}</Text>
-                                                    </View>
-                                                </Pressable>
+                        renderItem={({item}) => <MusicBt item = {item} foto = {albumData.coverImageUrl}/>
                     }
                     contentContainerStyle={{gap: 5}}
                     scrollEnabled={false}
